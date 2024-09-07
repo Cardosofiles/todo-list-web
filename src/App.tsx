@@ -1,68 +1,68 @@
-import { PlusCircle } from '@phosphor-icons/react'
-import { useState } from 'react'
+import { PlusCircle } from "@phosphor-icons/react";
+import { useState } from "react";
 
-import styles from './App.module.css'
+import styles from "./App.module.css";
 
-import { Button } from './components/Button'
-import { Header } from './components/Header'
-import { Input } from './components/Input'
-import { Empty } from './components/List/Empty'
-import { Header as ListHeader } from './components/List/Header'
-import { Item } from './components/List/Item'
+import { Button } from "./components/Button";
+import { Header } from "./components/Header";
+import { Input } from "./components/Input";
+import { Empty } from "./components/ListItems/Empty";
+import { Header as ListHeader } from "./components/ListItems/Header";
+import { Item } from "./components/ListItems/Item";
 
 export interface ITask {
-  id: number
-  text: string
-  isChecked: boolean
+  id: number;
+  text: string;
+  isChecked: boolean;
 }
 
 export function App() {
-  const [tasks, setTasks] = useState<ITask[]>([])
-  const [inputValue, setInputValue] = useState('')
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [inputValue, setInputValue] = useState("");
 
   const checkedTasksCounter = tasks.reduce((prevValue, currentTask) => {
     if (currentTask.isChecked) {
-      return prevValue + 1
+      return prevValue + 1;
     }
 
-    return prevValue
-  }, 0)
+    return prevValue;
+  }, 0);
 
   function handleAddTask() {
     if (!inputValue) {
-      return
+      return;
     }
 
     const newTask: ITask = {
       id: new Date().getTime(),
       text: inputValue,
       isChecked: false,
-    }
+    };
 
-    setTasks((state) => [...state, newTask])
-    setInputValue('')
+    setTasks((state) => [...state, newTask]);
+    setInputValue("");
   }
 
   function handleRemoveTask(id: number) {
-    const filteredTasks = tasks.filter((task) => task.id !== id)
+    const filteredTasks = tasks.filter((task) => task.id !== id);
 
-    if (!confirm('Deseja mesmo apagar essa tarefa?')) {
-      return
+    if (!confirm("Deseja mesmo apagar essa tarefa?")) {
+      return;
     }
 
-    setTasks(filteredTasks)
+    setTasks(filteredTasks);
   }
 
   function handleToggleTask({ id, value }: { id: number; value: boolean }) {
     const updatedTasks = tasks.map((task) => {
       if (task.id === id) {
-        return { ...task, isChecked: value }
+        return { ...task, isChecked: value };
       }
 
-      return { ...task }
-    })
+      return { ...task };
+    });
 
-    setTasks(updatedTasks)
+    setTasks(updatedTasks);
   }
 
   return (
@@ -104,5 +104,5 @@ export function App() {
         </div>
       </section>
     </main>
-  )
+  );
 }
